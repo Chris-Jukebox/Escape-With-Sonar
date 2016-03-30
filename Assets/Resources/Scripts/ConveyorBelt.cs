@@ -87,6 +87,7 @@ public class ConveyorBelt : MonoBehaviour
 				Transform trackingSpace = tile.transform.GetChild (0);
 				trackingSpace.SetParent (null);
 				trackingSpace.GetComponent<TrackingSpaceMovement> ().MovePastBelt (move);
+				Invoke("ReverseBeltDirection", 1f);
 			}
 
 			tile.transform.position = GetIndexPos (0);
@@ -98,5 +99,15 @@ public class ConveyorBelt : MonoBehaviour
 		Vector3 temp = this.transform.position + this.transform.forward * (tileIndex) * tileSize;
 		temp.y -= 0.001f;
 		return temp;
+	}
+
+	private void ReverseBeltDirection() {
+		Vector3 temp1 = move;
+		move = Vector3.zero;
+
+		Vector3 temp2 = end.transform.position;
+		this.transform.Rotate (new Vector3 (0f, 180.0f, 0f));
+		move = temp1;
+		this.transform.position = temp2;
 	}
 }
