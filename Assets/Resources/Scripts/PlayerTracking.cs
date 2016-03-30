@@ -8,16 +8,20 @@ public class PlayerTracking : MonoBehaviour {
 	public bool reachedEnd = true; 
 
 	private TrackingSpaceMovement trackingSpace;
-	private Vector3 originalPos; 
+
+	private bool falling = false;
+
 	// Use this for initialization
 	void Start () {
 		trackingSpace = this.transform.parent.parent.GetComponent<TrackingSpaceMovement> ();
-		originalPos = this.transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (IsFalling()) {
+			trackingSpace.StartPlayerFall(3f);
+			Invoke ("ResetVariables", 2f);
+		}
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -39,19 +43,17 @@ public class PlayerTracking : MonoBehaviour {
 		}
 	}
 
-	private bool falling = false;
-
-	void OnTriggerExit(Collider other) {
-		if (other.tag == "BeltTile" && onBelt && !reachedEnd) {
-			// we were on the belt, we haven't hit the end tile and we left the belt tile
-			// so we fell off 
-			trackingSpace.StartPlayerFall(3f);
-			Invoke ("ResetVariables", 2f);
-		}
-	}
 
 	void ResetVariables() {
 		reachedEnd = true;
 		onBelt = false;
+	}
+
+	private bool IsFalling(){
+		RaycastHit hit; 
+		if (Physics.Raycast (this.transform.position, Vector3.down, out hit, 4f)) {
+			return false;
+		} else
+			return true;
 	}
 }
