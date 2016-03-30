@@ -21,7 +21,7 @@ public class Door : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == "MainCamera") {
+		if (other.tag == "Hands") {
 			GoToScene ();
 		}
 	}

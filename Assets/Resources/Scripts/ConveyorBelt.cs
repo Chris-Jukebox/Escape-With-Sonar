@@ -86,7 +86,10 @@ public class ConveyorBelt : MonoBehaviour
 			if (tile.transform.childCount > 0) {
 				Transform trackingSpace = tile.transform.GetChild (0);
 				trackingSpace.SetParent (null);
-				trackingSpace.GetComponent<TrackingSpaceMovement> ().MovePastBelt (move);
+
+				// now move the tracking space a bit more past the belt 
+			
+				trackingSpace.GetComponent<TrackingSpaceMovement> ().MovePastBelt (tile.transform.position);
 
 				// stop belt
 				Vector3 temp = move;

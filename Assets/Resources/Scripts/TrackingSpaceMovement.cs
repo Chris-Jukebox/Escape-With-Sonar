@@ -19,35 +19,32 @@ public class TrackingSpaceMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log (curCenterPos);
 		MoveSpaceForward ();
 		PlayerFalling ();
 	}
 
 
 	private bool move = false;
-	private Vector3 moveDir; 
-	private int frameCount = 0;
-	private int maxFrameCount = 90;
+	private Vector3 newPos, moveDir = Vector3.zero; 
 
 
-	public void MovePastBelt(Vector3 dir) {
+	public void MovePastBelt(Vector3 curPos) {
 		
 		move = true;
-		moveDir = dir;
+		newPos = curPos;
+		moveDir = newPos - this.transform.position;
 	}
 
 	private void MoveSpaceForward() {
-		if (move && frameCount < maxFrameCount) {
-			this.transform.Translate (moveDir);
-			frameCount++;
-			if (frameCount == maxFrameCount) {
+		if (move && Vector3.Distance(this.transform.position, newPos) > 0.01f) {
+			this.transform.Translate (moveDir*Time.deltaTime);
+		
+			if (Vector3.Distance(this.transform.position, newPos) <= 0.01f) {
 				// we have reached new center so change curcenter
 				curCenterPos = this.transform.position;
 				curCenterRot = this.transform.rotation;
 			}
 		} else {
-			frameCount = 0;
 			move = false;
 
 		}
@@ -71,7 +68,6 @@ public class TrackingSpaceMovement : MonoBehaviour {
 		this.transform.position = curCenterPos;
 		this.transform.rotation = curCenterRot;
 
-		Debug.Log ("gets here");
 	}
 
 

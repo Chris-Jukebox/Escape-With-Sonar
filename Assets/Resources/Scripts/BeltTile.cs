@@ -7,7 +7,6 @@ public class BeltTile : MonoBehaviour
 
 	public Vector3 moveVector = Vector3.zero;
 
-	private float wrapDistance = 0.01f;
 	// Use this for initialization
 	void Start ()
 	{
@@ -19,12 +18,11 @@ public class BeltTile : MonoBehaviour
 	{
 		
 	}
+		
 
-	void OnTriggerStay(Collider other) {
+	void OnTriggerExit(Collider other) {
 		if (other.tag == "BeltEnd" && belt) {
-			if (Vector3.Distance (other.transform.position, this.transform.position) < wrapDistance) {
 				belt.WrapAround (this.gameObject);
-			}
 		}
 	}
 
