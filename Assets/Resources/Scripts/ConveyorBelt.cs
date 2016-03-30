@@ -87,7 +87,12 @@ public class ConveyorBelt : MonoBehaviour
 				Transform trackingSpace = tile.transform.GetChild (0);
 				trackingSpace.SetParent (null);
 				trackingSpace.GetComponent<TrackingSpaceMovement> ().MovePastBelt (move);
-				Invoke("ReverseBeltDirection", 1f);
+
+				// stop belt
+				Vector3 temp = move;
+				move = Vector3.zero;
+				// reverse and start it after 2 seconds. 
+				StartCoroutine(ReverseBeltDirection(temp, 2f));
 			}
 
 			tile.transform.position = GetIndexPos (0);
@@ -101,13 +106,15 @@ public class ConveyorBelt : MonoBehaviour
 		return temp;
 	}
 
-	private void ReverseBeltDirection() {
-		Vector3 temp1 = move;
-		move = Vector3.zero;
+	IEnumerator ReverseBeltDirection(Vector3 dir, float waitTime) {
+		yield return new WaitForSeconds (waitTime);
 
+	
 		Vector3 temp2 = end.transform.position;
 		this.transform.Rotate (new Vector3 (0f, 180.0f, 0f));
-		move = temp1;
 		this.transform.position = temp2;
+
+		// start moving belt again
+		move = dir;
 	}
 }
