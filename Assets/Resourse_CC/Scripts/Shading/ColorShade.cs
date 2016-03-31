@@ -64,19 +64,17 @@ public class ColorShade : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.K)) {
-			int x = Random.Range(0, size - 1);
-			int y = Random.Range(0, size - 1);
-			AddColorPoint(x, y);
+            float x = Random.value;
+            float y = Random.value;
+            AddColorPoint(new Vector2(x, y));
 		}
 	}
 
-    void OnParticleCollision(GameObject other) {
-        
-    }
 
-
-	void AddColorPoint(int x, int y) {
-		int y1 = y - bH / 2;
+	public void AddColorPoint(Vector2 pixelUV) {
+        int x = (int)(pixelUV.y * (size - 1));
+        int y = (int)(pixelUV.x * (size - 1));
+        int y1 = y - bH / 2;
 		int x1 = x - bW / 2;
 		for (int i = y1>=0 ? y1 : 0; i < size && i < y1+bH; i++) {
 			for (int j = x1>=0 ? x1 : 0; j < size && j < x1+bW; j++) {
