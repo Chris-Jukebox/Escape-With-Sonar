@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour {
 
 	private float wavePower = 0;
 
+    public int renderCount = 0;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		instance = this;
 	}
 	

@@ -43,7 +43,7 @@ public class SonarElement : MonoBehaviour {
             if (rend == null || rend.sharedMaterial == null || rend.sharedMaterial.mainTexture == null || meshCollider == null)
                 return;
             Vector2 pixelUV = hit.textureCoord;
-            col.gameObject.GetComponent<ColorShade>().AddColorPoint(pixelUV);
+            col.gameObject.GetComponent<ColorRender>().AddColorPoint(pixelUV);
 
             Destroy(this.gameObject);
         }
