@@ -16,6 +16,7 @@ public class BonusPoint : MonoBehaviour {
         {
             Instantiate(bonusSparkle, transform.position, Quaternion.identity);
             GameManager.instance.GetBonus();
+            AudioManager.instance.PlaySoundBonus(transform.position);
             Destroy(gameObject);
         }
     }

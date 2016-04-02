@@ -5,13 +5,16 @@ public class Monster : MonoBehaviour {
 	private Vector3 targetPos;
 	private ParticleSystem particle;
 	private bool awake = false;
-
+    
 	private static float SPEED = 0.05f;
+
+    private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		particle = GetComponent<ParticleSystem> ();
 		particle.enableEmission = false;
+        audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -32,6 +35,10 @@ public class Monster : MonoBehaviour {
 	}
 
 	void SetAwake (bool isAwake) {
+        if (isAwake && !audio.isPlaying)
+            audio.Play();
+        else if (!isAwake && audio.isPlaying)
+            audio.Stop();
 		particle.enableEmission = isAwake;
 		awake = isAwake;
 	}
