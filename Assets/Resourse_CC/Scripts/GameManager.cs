@@ -50,6 +50,6 @@ public class GameManager : MonoBehaviour {
     {
         bonusCount--;
         if (bonusCount <= 0)
-            Instantiate(portal, new Vector3(-0.02368622f, 0.0627f, -0.7489983f), Quaternion.identity);
+            Instantiate(portal, new Vector3(-0.02368622f, 0.1426f, -0.7489983f), Quaternion.identity);
     }
 }
