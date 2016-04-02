@@ -7,7 +7,7 @@ public class WaveGenerator : MonoBehaviour {
 	public GameObject bonusSpark;
 
     public GameObject soundElement;
-
+    public int sonarDensity = 50;
 	public static WaveGenerator instance;
 
 	void Start() {
@@ -41,7 +41,7 @@ public class WaveGenerator : MonoBehaviour {
 
     public void SoundElements(Vector3 pos, float value = 1)
     {
-        for(int i=0; i<200; i++)
+        for(int i=0; i<sonarDensity; i++)
         {
             GameObject sonarElem = (GameObject)Instantiate(
                 soundElement, 
