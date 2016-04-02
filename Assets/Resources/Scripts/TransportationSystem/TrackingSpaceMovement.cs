@@ -8,12 +8,15 @@ public class TrackingSpaceMovement : MonoBehaviour {
 	private Vector3 curCenterPos; 
 	private Quaternion curCenterRot;
 
+	public static Vector3 spawnPos; 
+
 	// Use this for initialization
 	void Start () {
 		playerTracking = player.gameObject.GetComponent<PlayerTracking> ();
 		curCenterPos = this.transform.position;
 		curCenterRot = this.transform.rotation;
-
+		spawnPos = curCenterPos;
+		this.transform.position = spawnPos;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +46,7 @@ public class TrackingSpaceMovement : MonoBehaviour {
 				// we have reached new center so change curcenter
 				curCenterPos = this.transform.position;
 				curCenterRot = this.transform.rotation;
+				spawnPos = curCenterPos;
 			}
 		} else {
 			move = false;

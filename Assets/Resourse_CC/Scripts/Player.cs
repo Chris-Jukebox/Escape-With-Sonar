@@ -31,8 +31,8 @@ public class Player : MonoBehaviour {
 		else if (col.gameObject.tag == "Obstacle")
 			GetHurt ();
 		else if (col.gameObject.tag == "Bonus") {
-			WaveGenerator.instance.BonusSpark (col.transform.position);
-			GetBonus ();
+			// WaveGenerator.instance.BonusSpark (col.transform.position);
+			// GetBonus ();
 		}
 	}
 }
