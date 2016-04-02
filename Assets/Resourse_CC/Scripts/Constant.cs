@@ -16,6 +16,9 @@ public class Constant : MonoBehaviour {
 	public static float MONSTER_HEIGHT = 0.1f;
 
 	// controller
-	public static float MAX_HOLDING = 3f;
-	public static float MIN_HOLDING = 0.5f;
+	public static float MAX_HOLDING = 1f;
+	public static float MIN_HOLDING = 0.2f;
+
+    // scenes
+    public static string SCENE_PALACE = "MindPalace";
 }

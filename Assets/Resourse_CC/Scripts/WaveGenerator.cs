@@ -39,7 +39,7 @@ public class WaveGenerator : MonoBehaviour {
 		Instantiate (bonusSpark, pos, Quaternion.identity);
 	}
 
-    public void SoundElements(Vector3 pos, float falue = 1)
+    public void SoundElements(Vector3 pos, float value = 1)
     {
         for(int i=0; i<200; i++)
         {
@@ -52,6 +52,7 @@ public class WaveGenerator : MonoBehaviour {
                     Random.value * 2 - 1, 
                     Random.value * 2 - 1
                 ));
+            sonarElem.GetComponent<SonarElement>().Set(value);
         }
     }
 }

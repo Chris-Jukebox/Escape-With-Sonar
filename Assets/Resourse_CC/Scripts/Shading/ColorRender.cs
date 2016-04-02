@@ -18,9 +18,10 @@ public class ColorRender : MonoBehaviour {
         GetComponent<Renderer>().material.mainTexture = renderGroup.tex;
     }
 
-    public void AddColorPoint(Vector2 pixelUV)
+    public void AddColorPoint(Vector2 pixelUV, float value)
     {
-        renderGroup.AddParticle(pixelUV);
+        renderGroup.AddParticle(pixelUV, value);
+
     }
 
 }

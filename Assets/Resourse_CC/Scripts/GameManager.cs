@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour {
 	private float wavePower = 0;
 
     public int renderCount = 0;
+
+    public GameObject portal;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,4 +38,18 @@ public class GameManager : MonoBehaviour {
 	public Player GetPlayer() {
 		return player.GetComponent<Player> ();
 	}
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    // bonus collection
+    public int bonusCount = 0;
+    public void GetBonus()
+    {
+        bonusCount--;
+        if (bonusCount <= 0)
+            Instantiate(portal, new Vector3(-0.02368622f, 0.0627f, -0.7489983f), Quaternion.identity);
+    }
 }
