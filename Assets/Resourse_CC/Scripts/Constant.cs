@@ -21,4 +21,9 @@ public class Constant : MonoBehaviour {
 
     // scenes
     public static string SCENE_PALACE = "MindPalace";
+
+    // layers
+    public static int[] LAYER_OBSTACLES;
+    public static int LAYER_MONSTER;
+    public static int LAYER_PLAYER;
 }

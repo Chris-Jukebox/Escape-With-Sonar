@@ -29,10 +29,6 @@ public class GameManager : MonoBehaviour {
 			player.GetComponent<Player>().ReleaseWave (wavePower / 1.5f);
 			wavePower = 0;
 		}
-		// Test Monster.Chase()
-		if (Input.GetKeyDown (KeyCode.M)) {
-			GameObject.Find("Monster").GetComponent<Monster>().Chase();
-		}
 	}
 
 	public Player GetPlayer() {
