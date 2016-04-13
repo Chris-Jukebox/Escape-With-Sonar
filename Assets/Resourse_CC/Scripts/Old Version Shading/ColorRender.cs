@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ColorRender : MonoBehaviour {
-
+    /*
     public GameObject renderObj;
     private RenderGroup renderGroup;
 
@@ -22,6 +22,6 @@ public class ColorRender : MonoBehaviour {
     {
         renderGroup.AddParticle(pixelUV, value);
 
-    }
+    }*/
 
 }

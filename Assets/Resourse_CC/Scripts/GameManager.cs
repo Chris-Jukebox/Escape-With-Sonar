@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
+
+    public bool playerFollowVive = true;
 
 	public GameObject player;
 
@@ -19,18 +21,6 @@ public class GameManager : MonoBehaviour {
 		instance = this;
 	}
 	
-	void Update () {
-		// CheckPressButton ();
-		if (Input.GetKey (KeyCode.S)) {
-			wavePower += Time.deltaTime;
-		}
-		if (Input.GetKeyUp (KeyCode.S)) {
-			wavePower = wavePower < 0.5f ? 0 : (wavePower > 2f ? 1.5f : wavePower - 0.5f);
-			player.GetComponent<Player>().ReleaseWave (wavePower / 1.5f);
-			wavePower = 0;
-		}
-	}
-
 	public Player GetPlayer() {
 		return player.GetComponent<Player> ();
 	}
@@ -40,12 +30,40 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(sceneName);
     }
 
+
+    #region MONSTER
+    public GameObject[] monsterList;
+    private int monsterIndex = 0;
+    public void ActivateNextMonster()
+    {
+        monsterList[monsterIndex++].SetActive(true);
+    }
+    #endregion
+
+
+
+    #region ORBS
     // bonus collection
-    public int bonusCount = 0;
+    public int bonusCount = 0;    
     public void GetBonus()
     {
         bonusCount--;
         if (bonusCount <= 0)
-            Instantiate(portal, new Vector3(-0.02368622f, 0.1426f, -0.7489983f), Quaternion.identity);
+            StageManager.instance.NextStage();
     }
+    #endregion
+
+
+    #region PORTAL
+    /// <summary>
+    /// Create a portal.
+    /// </summary>
+    /// <param name="pos">position of the portal</param>
+    public void ShowPortal(Vector3 pos)
+    {
+        Instantiate(portal, pos, Quaternion.identity);
+        WaveGenerator.instance.SoundWave(pos, 1);
+    }
+    #endregion
+
 }

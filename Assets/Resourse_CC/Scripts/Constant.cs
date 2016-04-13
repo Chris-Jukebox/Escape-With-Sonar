@@ -2,28 +2,27 @@
 using System.Collections;
 
 public class Constant : MonoBehaviour {
-	// wave settings
-	public static float MAX_SPEED = 0.18f;
-	public static float MIN_SPEED = 0.05f;
-	public static float MAX_ALPHA = 1f;
-	public static float MIN_ALPHA = 0.2f;
-	
-	public static float HURT_SPEED = 0.3f;
-	public static float DEAD_SPEED = 0.8f;
 
-	// positions
+    // Monster: positions
 	public static float WAVE_HEIGHT = 0.07f;
 	public static float MONSTER_HEIGHT = 0.1f;
 
-	// controller
-	public static float MAX_HOLDING = 1f;
-	public static float MIN_HOLDING = 0.2f;
-
-    // scenes
+    // Global constants
     public static string SCENE_PALACE = "MindPalace";
 
-    // layers
-    public static int[] LAYER_OBSTACLES;
-    public static int LAYER_MONSTER;
-    public static int LAYER_PLAYER;
+    // Layers
+    public static int[] LAYER_OBSTACLES = new int[] {8, 11, 15};
+    public static int LAYER_MONSTER = 10;
+    public static int LAYER_PLAYER = 13;
+    public static int LAYER_CONTROLLER = 14;
+    public static int LAYER_OBJECTS = 15;
+    public static int LAYER_BLOOD = 16;
+
+    // Player: sonar setting when walking
+    /// <summary> The minimum distance of walking to activate the smallest sonar </summary>
+    public static float WALK_MIN_DIST = 0.02f;
+    /// <summary> The distance of walking to activate the biggest sonar </summary>
+    public static float WALK_MAX_DIST = 0.1f;
+    /// <summary> The minimum interval between walking sonars </summary>
+    public static float WALK_INTERVAL = 0.5f;
 }

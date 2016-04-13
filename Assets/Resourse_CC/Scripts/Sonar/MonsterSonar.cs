@@ -9,25 +9,25 @@ using System.Collections;
 
 public class MonsterSonar : MonoBehaviour {
 
-    private static float SPEED = 0.15f;  // particle moving speed
-    private float lifetime = 3;          // remaining lifetime
+    private float speed = 0.15f;  // particle moving speed
+    private float lifetime = 1;          // remaining lifetime
     private Vector3 sourcePos;
 
     // init the lifetime of particle (keep it the same with the main sonar)
-    public void Set(float value, Vector3 pos)
+    public void Set(float speed, float life, Vector3 pos)
     {
-        lifetime = 2 * value + 1;
+        lifetime = life;
         sourcePos = pos;
     }
 
     void Update()
     {
         // move forward
-        transform.position = transform.position + transform.forward * SPEED * Time.deltaTime;
+        transform.position = transform.position + transform.forward * speed * Time.deltaTime;
 
         // update lifetime
         lifetime -= Time.deltaTime;
-        if (lifetime < 0)
+        if (lifetime <= 0)
             Destroy(this.gameObject);
     }
 

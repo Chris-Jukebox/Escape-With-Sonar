@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SonarElement : MonoBehaviour {
-
+    /*
     private static float SPEED = 0.15f;
     private static int MASK = (1 << 8) | (1 << 11);
     private float lifetime = 3;
@@ -46,5 +46,5 @@ public class SonarElement : MonoBehaviour {
 
             Destroy(this.gameObject);
         }
-    }
+    }*/
 }
