@@ -7,7 +7,7 @@ public class Portal : MonoBehaviour {
     {
         if (col.gameObject.tag=="Player")
         {
-            GameManager.instance.LoadScene(Constant.SCENE_PALACE);
+            GameManager.instance.LevelComplete();
         }
     }
 }

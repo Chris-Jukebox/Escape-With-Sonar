@@ -20,7 +20,7 @@ public class Constant : MonoBehaviour {
 
     // Player: sonar setting when walking
     /// <summary> The minimum distance of walking to activate the smallest sonar </summary>
-    public static float WALK_MIN_DIST = 0.02f;
+    public static float WALK_MIN_DIST = 0.005f;
     /// <summary> The distance of walking to activate the biggest sonar </summary>
     public static float WALK_MAX_DIST = 0.1f;
     /// <summary> The minimum interval between walking sonars </summary>

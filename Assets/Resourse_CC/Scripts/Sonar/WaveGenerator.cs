@@ -30,10 +30,10 @@ public class WaveGenerator : MonoBehaviour {
         
         float speed = Mathf.Lerp ( 0.15f, 0.18f, value );
 		float alpha = Mathf.Lerp ( 0.10f, 1.00f, value );
-        float life  = Mathf.Lerp ( 0.50f, 2.00f, value );
-        int density = (int)Mathf.Lerp(2000, 10000, value);
+        float life  = Mathf.Lerp ( 1.0f, 2.00f, value );
+        int density = (int)Mathf.Lerp(10000, 10000, value);
 
-        pos.y = 0.045f;
+        pos.y = 0.1f;
 
         ReleaseSonar(pos, life, speed, alpha, density);
         MonsterWave(pos, life-0.3f, speed);

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
     
 
 	public void Die() {
+		GameManager.instance.GameOver ();
 		WaveGenerator.instance.BloodWave (transform.position, 1);
 	}
 

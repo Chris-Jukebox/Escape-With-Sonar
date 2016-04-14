@@ -139,7 +139,7 @@ public class Monster : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision col) {
+    void OnTriggerEnter(Collider col) {
         // if collides with player, gameover lol
         if (col.gameObject.layer == Constant.LAYER_PLAYER)
         {

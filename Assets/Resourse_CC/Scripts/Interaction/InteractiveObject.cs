@@ -4,11 +4,10 @@ using System.Collections;
 public class InteractiveObject : MonoBehaviour {
 
     private Rigidbody rigid;
-
+	private bool isInit = false;
 	// Use this for initialization
 	void Start () {
-        rigid = GetComponent<Rigidbody>();
-        mat = GetComponent<Renderer>().material;
+		Init ();
 	}
 	
 	// Update is called once per frame
@@ -16,7 +15,13 @@ public class InteractiveObject : MonoBehaviour {
         UpdateCollideTimer();
 	}
 
-
+	public void Init(){
+		if (isInit)
+			return;
+		rigid = GetComponent<Rigidbody>();
+		mat = GetComponent<Renderer>().material;
+		isInit = true;
+	}
 
 
     #region Color_Change
@@ -52,7 +57,7 @@ public class InteractiveObject : MonoBehaviour {
 
     private void SetMaterial()
     {
-        mat.color = Color.Lerp(new Color(1, 1, 1, 0), new Color(1, 1, 1, COLOR_ALPHA), glowValue);
+        mat.color = Color.Lerp(new Color(1, 1, 1, 0.0f), new Color(1, 1, 1, COLOR_ALPHA), glowValue);
         // mat.SetColor("_EmissionColor", Color.Lerp(new Color(0, 0, 0), new Color(EMISSION, EMISSION, EMISSION), glowValue));
     }
 
@@ -119,8 +124,8 @@ public class InteractiveObject : MonoBehaviour {
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
-            deltaMove = (transform.position - lastPos)/0.1f;
+            yield return new WaitForSeconds(0.05f);
+            deltaMove = (transform.position - lastPos)/0.05f;
             lastPos = transform.position;
         }
     }
@@ -130,7 +135,7 @@ public class InteractiveObject : MonoBehaviour {
         transform.parent = null;
         StopCoroutine("recordPath");
         rigid.isKinematic = false;
-        rigid.velocity = deltaMove * 2 / 0.3f;
+        rigid.velocity = deltaMove / 0.3f;
     }
 
     #endregion
@@ -161,7 +166,8 @@ public class InteractiveObject : MonoBehaviour {
             {
                 if (timer <= 0)
                 {
-                    WaveGenerator.instance.SoundWave(transform.position, 0.5f);
+					float value = col.impulse.magnitude * 20;
+                    WaveGenerator.instance.SoundWave(transform.position, value);
                     timer = COLLIDE_INTERVAL;
                     SetShine(1);
                 }

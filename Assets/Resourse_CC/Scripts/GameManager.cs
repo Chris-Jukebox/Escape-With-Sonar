@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour {
 		return player.GetComponent<Player> ();
 	}
 
-    public void LoadScene(string sceneName)
+	public void LoadScene()
     {
-        SceneManager.LoadScene(sceneName);
+		SceneManager.LoadScene(Constant.SCENE_PALACE);
     }
 
 
@@ -66,4 +66,12 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+	public void LevelComplete(){
+		Invoke ("LoadScene", 1.5f);
+	}
+	public Camera mainCamera;
+	public void GameOver() {
+		mainCamera.cullingMask = 1 << Constant.LAYER_BLOOD;
+		Invoke ("LoadScene", 4f);
+	}
 }
