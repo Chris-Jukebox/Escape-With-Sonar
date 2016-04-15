@@ -4,20 +4,30 @@ using System.Collections;
 public class Player : MonoBehaviour {
 	public GameObject playerAnchor;
     
-
     void Start()
     {
         lastPosition = transform.position;
     }
 
+    
+
     void Update() {
         if (GameManager.instance.playerFollowVive)
 		    transform.position = playerAnchor.transform.position;
-        UpdateWalkSonar();
-	}
-    
 
-	public void Die() {
+        // update deltaMove
+        deltaMove = transform.position - lastPosition;
+        lastPosition = transform.position;
+	}
+
+    private Vector3 deltaMove = Vector3.zero;
+    public Vector3 DeltaMove()
+    {
+        return deltaMove;
+    }
+
+
+    public void Die() {
 		GameManager.instance.GameOver ();
 		WaveGenerator.instance.BloodWave (transform.position, 1);
 	}

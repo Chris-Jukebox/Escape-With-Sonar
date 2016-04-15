@@ -38,9 +38,17 @@ public class GameManager : MonoBehaviour {
     {
         monsterList[monsterIndex++].SetActive(true);
     }
+
+    /// <summary>
+    /// Get the vector of player movement in last frame
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetPlayerMove()
+    {
+        return GetPlayer().DeltaMove();
+        
+    }
     #endregion
-
-
 
     #region ORBS
     // bonus collection
