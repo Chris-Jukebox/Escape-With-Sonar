@@ -140,7 +140,7 @@ public class Monster : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider col) {
-        // if collides with player, gameover lol
+        // if collides with player, gameover
         if (col.gameObject.layer == Constant.LAYER_PLAYER)
         {
             GameManager.instance.GetPlayer().Die();
