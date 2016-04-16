@@ -10,11 +10,12 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance;
 
-	private float wavePower = 0;
-
     public int renderCount = 0;
 
     public GameObject portal;
+
+
+
 
 	// Use this for initialization
 	void Awake () {
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour {
     }
 
 
+
+
     #region MONSTER
     public GameObject[] monsterList;
     private int monsterIndex = 0;
@@ -38,7 +41,18 @@ public class GameManager : MonoBehaviour {
     {
         monsterList[monsterIndex++].SetActive(true);
     }
+
+    /// <summary>
+    /// Get the vector of player movement in last frame
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetPlayerMove()
+    {
+        return GetPlayer().DeltaMove();
+        
+    }
     #endregion
+
 
 
 
@@ -52,6 +66,9 @@ public class GameManager : MonoBehaviour {
             StageManager.instance.NextStage();
     }
     #endregion
+
+
+
 
 
     #region PORTAL

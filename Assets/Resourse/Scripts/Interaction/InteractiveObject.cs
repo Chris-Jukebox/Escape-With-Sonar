@@ -28,7 +28,6 @@ public class InteractiveObject : MonoBehaviour {
 
     private Material mat;
     private static float COLOR_ALPHA = 160f / 255f;
-    private static float EMISSION = 1f;
     private static float GLOW_DURATION = 0.6f;
     private float glowValue = 0;
     private bool isGlow = false;
