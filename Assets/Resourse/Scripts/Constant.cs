@@ -6,7 +6,8 @@ public class Constant : MonoBehaviour {
     // Monster: positions
 	public static float WAVE_HEIGHT = 0.07f;
 	public static float MONSTER_HEIGHT = 0.1f;
-	public static float OFFSET = 5F;
+	// THRESHOLD FROM THE MONSTER TO THE BORDER
+	public static float OFFSET = 1f;
 
     // Global constants
     public static string SCENE_PALACE = "MindPalace";

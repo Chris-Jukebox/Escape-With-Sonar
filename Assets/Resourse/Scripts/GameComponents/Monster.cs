@@ -57,12 +57,13 @@ public class Monster : MonoBehaviour {
         case State.SPEED_UP:
         	timer -= Time.deltaTime;
         	if (timer <= 0f)
-        		ChangeState (State.MOVE);
+        		ChangeState (State.SPEED_DOWN);
 			break;
 		case State.SPEED_DOWN:
 			timer -= Time.deltaTime;
-        	if (timer <= 0f)
+        	if (timer <= 0f && accel <= 1f)
         		ChangeState (State.MOVE);
+			else ChangeState (State.SPEED_DOWN);
             default: break;
         }
     }
@@ -125,6 +126,7 @@ public class Monster : MonoBehaviour {
 				break;
 			case State.SPEED_UP:
 				ChangeState(State.SPEED_UP);
+				// after some interval it goes to Speed_down
 				break;
 			case State.SPEED_DOWN:
 				ChangeState(State.MOVE);
@@ -139,18 +141,44 @@ public class Monster : MonoBehaviour {
 		speed = -GameManager.instance.GetPlayerMove();
 		// set y to 0
 		speed.y = 0f;
+		// multiply speed
+		if(accel != 0f)
+			ModifySpeed();
+		// check the border
+		int layerMask = 1 << 8;
+		RaycastHit forwardHit, backHit, leftHit, rightHit;
+		// forward
+		if(Physics.Raycast(transform.position, transform.TransformDirection (Vector3.forward), out forwardHit, Mathf.Infinity, layerMask))
+		{	
+			if(forwardHit <= Constant.OFFSET)
+				speed.z = 0f;
+		}
+		// backward
+		if(Physics.Raycast(transform.position, transform.TransformDirection (Vector3.back), out backHit, Mathf.Infinity, layerMask))
+		{	
+			if(backHit <= Constant.OFFSET)
+				speed.z = 0f;
+		}
+		// left
+		if(Physics.Raycast(transform.position, transform.TransformDirection (Vector3.left), out leftHit, Mathf.Infinity, layerMask))
+		{	
+			if(leftHit <= Constant.OFFSET)
+				speed.x = 0f;
+		}
+		// right
+		if(Physics.Raycast(transform.position, transform.TransformDirection (Vector3.right), out rightHit, Mathf.Infinity, layerMask))
+		{	
+			if(rightHit <= Constant.OFFSET)
+				speed.x = 0f;
+		}
 		particle.transform.position += speed;
 	}
 
 	public void ModifySpeed () {
 		// get the hit times
-		speed = -GameManager.instance.GetPlayerMove();
-		speed.y = 0f;
-		speed = speed * accel;
-		particle.transform.position += speed;
+
+		speed *= accel;
 		// particle gets brighter or darker based accel
-
-
 	}
 
     // called when touched, change monster's state
