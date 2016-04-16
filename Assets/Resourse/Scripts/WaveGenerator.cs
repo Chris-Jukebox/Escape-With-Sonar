@@ -27,11 +27,11 @@ public class WaveGenerator : MonoBehaviour {
     /// Normal sonar: used for player walking. 
     /// </summary>
 	public void SoundWave (Vector3 pos, float value = 1) {
-        
-        float speed = Mathf.Lerp ( 0.15f, 0.18f, value );
-		float alpha = Mathf.Lerp ( 0.10f, 1.00f, value );
-        float life  = Mathf.Lerp ( 1.0f, 2.00f, value );
-        int density = (int)Mathf.Lerp(10000, 10000, value);
+
+        float speed = 0.18f;
+		float alpha = Mathf.Lerp ( 0.2f, 1f, value );
+        float life  = Mathf.Lerp ( 1f, 2f, value );
+        int density = (int) Mathf.Lerp(10000, 10000, value);
 
         pos.y = 0.1f;
 

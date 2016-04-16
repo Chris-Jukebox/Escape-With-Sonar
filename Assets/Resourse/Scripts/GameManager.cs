@@ -10,11 +10,12 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance;
 
-	private float wavePower = 0;
-
     public int renderCount = 0;
 
     public GameObject portal;
+
+
+
 
 	// Use this for initialization
 	void Awake () {
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour {
     {
 		SceneManager.LoadScene(Constant.SCENE_PALACE);
     }
+
+
 
 
     #region MONSTER
@@ -50,6 +53,9 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+
+
+
     #region ORBS
     // bonus collection
     public int bonusCount = 0;    
@@ -60,6 +66,9 @@ public class GameManager : MonoBehaviour {
             StageManager.instance.NextStage();
     }
     #endregion
+
+
+
 
 
     #region PORTAL
