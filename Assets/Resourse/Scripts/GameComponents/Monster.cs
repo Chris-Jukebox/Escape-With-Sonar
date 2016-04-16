@@ -4,33 +4,30 @@ using System.Collections;
 public class Monster : MonoBehaviour {
 
     private ParticleSystem particle;
-
-    private float timer = 0;
     private enum State {
-        HIDE,
-        STAY,
-        WAIT_TO_MOVE,
+        SLEEP,
+        AWAKE,
+        MOVE,
         SPEED_UP,
-        SPEED_DOWN
+        SPEED_DOWN,
+        DIE
     };
-    private State state = State.HIDE;
-    
+    // Timer 
+    private float timer;  
+    // Current Monster State
+    private State state = State.SLEEP;
     // monster setting
-    private static float MAX_SPEED = 0.03f;
-    private static float SPEED_ACCEL = 1f;
-    private static float SPEED_DECAY = -0.3f;
-    private static float TIME_STAY = 15f;
-    private static float TIME_WAIT = 1f;
-    private static float TIME_SPEED_UP = 1.3f;
+    private static float WAIT_TO_MOVE = 1.5f;
+    private static float PLAY_TIME = 10f;
+    private static float TIME_SPEED_UP = 5f;
+    private static float TIME_COOL_DOWN = 5f;
+    private static float SPEED_ACCEL = 1.2f;
+    private static float SPEED_DECAY = 0.8f;
     private static float CHASE_INTERVAL = 1f;
-
-    private float chaseColdDown = 0;
-
-    // chase
-    private Vector3 dir;
-    private Vector3 target;
-    private float speed = 0f;
-    private float accel = 0f;
+    // move
+    private Vector3 speed;
+ 	private float accel;
+ 	private int accel_times;
 
     void Start() {
         particle = GetComponent<ParticleSystem>();
@@ -39,44 +36,33 @@ public class Monster : MonoBehaviour {
 
     void Update() {
         Action();
-        if (chaseColdDown > 0)
-        {
-            chaseColdDown -= Time.deltaTime;
-            if (chaseColdDown < 0)
-                chaseColdDown = 0;
-        }
     }
 
     // called in Update(), depending on monster's state
-    void Action() {
-        switch (state)
-        {
-            case State.HIDE:
-                return;
-            case State.STAY:
-                timer -= Time.deltaTime;
-                if (timer <= 0)
-                    ChangeState(State.HIDE);
-                break;
-            case State.WAIT_TO_MOVE:
-                timer -= Time.deltaTime;
-                if (timer <= 0)
-                    ChangeState(State.SPEED_UP);
-                break;
-            case State.SPEED_UP:
-                timer -= Time.deltaTime;
-                if (speed < MAX_SPEED)
-                speed += accel * Time.deltaTime;
-                transform.position += dir * speed * Time.deltaTime;
-                if (timer <= 0)
-                    ChangeState(State.SPEED_DOWN);
-                break;
-            case State.SPEED_DOWN:
-                speed += accel * Time.deltaTime;
-                transform.position += dir * speed * Time.deltaTime;
-                if (speed <= 0)
-                    ChangeState(State.STAY);
-                break;
+    void Action ()
+	{
+		switch (state) {
+		case State.SLEEP:
+			return;
+		case State.AWAKE:
+			timer -= Time.deltaTime;
+			if (timer <= 0f)
+				ChangeState (State.MOVE);
+			break;
+		case State.MOVE:
+			timer -= Time.deltaTime;
+			if (timer <= 0f)
+				ChangeState (State.SLEEP);
+            break;
+        case State.SPEED_UP:
+        	timer -= Time.deltaTime;
+        	if (timer <= 0f)
+        		ChangeState (State.MOVE);
+			break;
+		case State.SPEED_DOWN:
+			timer -= Time.deltaTime;
+        	if (timer <= 0f)
+        		ChangeState (State.MOVE);
             default: break;
         }
     }
@@ -85,29 +71,35 @@ public class Monster : MonoBehaviour {
     {
         switch (s)
         {
-            case State.HIDE:
+            case State.SLEEP:
                 particle.enableEmission = false;
-                timer = 0;
-                speed = 0;
-                accel = 0;
+                timer = 0f;
+                speed = Vector3.zero;
+                accel = 0f;
+                accel_times = 0;
                 break;
-            case State.STAY:
+            case State.AWAKE:
                 particle.enableEmission = true;
-                timer = TIME_STAY;
-                speed = 0;
-                accel = 0;
+				timer = WAIT_TO_MOVE;
+                speed = 0f;
+                accel = 0f;
+                accel_times = 0;
                 break;
-            case State.WAIT_TO_MOVE:
-                timer = TIME_WAIT;
-                speed = 0;
-                accel = 0;
+            case State.MOVE:
+                timer = PLAY_TIME;
+                speed = 0f;
+                accel = 0f;
+                accel_times = 0;
                 break;
             case State.SPEED_UP:
                 timer = TIME_SPEED_UP;
-                accel = SPEED_ACCEL;
+                accel *= SPEED_ACCEL;
+                accel_times += 1;
                 break;
             case State.SPEED_DOWN:
-                accel = SPEED_DECAY;
+            	timer = TIME_COOL_DOWN;
+                accel *= SPEED_DECAY;
+                accel_times -= 1;
                 break;
             default: break;
         }
@@ -115,30 +107,53 @@ public class Monster : MonoBehaviour {
     }
 
     public GameObject monsterSparkle;
+    // called when touched, change monster's state
+    public void Touched (Vector3 target)
+	{
+		if (chaseCoolDown > 0)
+			return;
+		chaseCooLDown = CHASE_INTERVAL;
+		chaseCoolDown--;
+		dir = (target - transform.position).normalized;
+		Instantiate (monsterSparkle, transform.position, Quaternion.identity);
+		switch (state) {
+			case State.SLEEP:
+				ChangeState(State.AWAKE);
+				break;
+			case State.MOVE:
+				ChangeState(State.SPEED_UP);
+				break;
+			case State.SPEED_UP:
+				ChangeState(State.SPEED_UP);
+				break;
+			case State.SPEED_DOWN:
+				ChangeState(State.MOVE);
+				break;
+			default: break;
+		}
+	}
+
+   	// called when monster's status changes to move
+   	public void Move () {
+   		// get player's move
+		speed = -GameManager.instance.GetPlayerMove();
+		// set y to 0
+		speed.y = 0f;
+		particle.transform.position += speed;
+	}
+
+	public void ModifySpeed () {
+		// get the hit times
+		speed = -GameManager.instance.GetPlayerMove();
+		speed.y = 0f;
+		speed = speed * accel;
+		particle.transform.position += speed;
+		// particle gets brighter or darker based accel
+
+
+	}
 
     // called when touched, change monster's state
-    public void Chase(Vector3 target) {
-        if (chaseColdDown > 0)
-            return;
-        chaseColdDown = CHASE_INTERVAL;
-        dir = (target - transform.position).normalized;
-        Instantiate(monsterSparkle, transform.position, Quaternion.identity);
-        switch (state)
-        {
-            case State.HIDE:
-                ChangeState(State.STAY);
-                break;
-            case State.STAY:
-                ChangeState(State.WAIT_TO_MOVE);
-                break;
-            case State.SPEED_UP:
-            case State.SPEED_DOWN:
-                ChangeState(State.SPEED_UP);
-                break;
-            default: break;
-        }
-    }
-
     void OnTriggerEnter(Collider col) {
         // if collides with player, gameover
         if (col.gameObject.layer == Constant.LAYER_PLAYER)

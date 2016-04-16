@@ -6,10 +6,10 @@ public class Constant : MonoBehaviour {
     // Monster: positions
 	public static float WAVE_HEIGHT = 0.07f;
 	public static float MONSTER_HEIGHT = 0.1f;
+	public static float OFFSET = 5F;
 
     // Global constants
     public static string SCENE_PALACE = "MindPalace";
-
     // Layers
     public static int[] LAYER_OBSTACLES = new int[] {8, 11, 15};
     public static int LAYER_MONSTER = 10;
